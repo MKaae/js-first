@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dÿnamic table rows</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        /*Small astyling options added because it doesnt have to be ugly*/
+        html, body{ width: 100%; height: 100%; overflow: hidden;}
+        body{ display:flex; flex-direction: column; align-items: center;}
+        .sort-arrow { display: inline-block; margin-left: 5px; font-size: 15px;}
+        .sort-arrow.up { transform: rotate(180deg);}
+    </style>
+</head>
+<body>
+    <h1>Excersize 5</h1>
+    <table class="table" style="width: 80%">
+        <thead>
+        <tr>
+            <!--Added arrows to the table headers so i can see what direction its sorted by didnt quite figure out how to make them
+            disappear when they are not being sorted by the current element.-->
+            <th id="id-header">ID</th>
+            <th id="year-header">Year<span class="sort-arrow">&#8593;</th>
+            <th id="make-header">Make<span class="sort-arrow">&#8593;</th>
+            <th id="model-header">Model<span class="sort-arrow">&#8593;</th>
+            <th id="price-header">Price<span class="sort-arrow">&#8593;</th>
+        </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+    <!--Dropdown menu with the options i want to be able to filter by-->
+    <select id="filter-selector" style="font-size: 15px; margin: 5px">
+        <option>Filter Options</option>
+        <option value="year">Year before</option>
+        <option value="make">Make</option>
+        <option value="model">Model</option>
+        <option value="price">Price less than</option>
+    </select>
+    <input type="text" id="input-for-select" style="display: none;"/>
+    <div style="margin-top: 5px; margin: 0 auto; width: fit-content;">
+        <a href="/">back</a>
+    </div>  
+    <div style="margin: 0 auto; width:fit-content">
+    <h2>Reflections</h2>
+    </div>
+        <div style="border: 1px solid black; border-radius: 5px;padding: 5px; width:80%; margin:0 auto;">
+            Replace this with your explanation of the concepts
+            <br>
+            <ul>
+                <li>This was a complicated assignment to me and took by far the longest.</li>
+                <li>We have a method carTableRender which i reuse thru all my functions to render the data in my table.</li>
+                <li>I then added a filter option with switch case that takes value from the dropdown and the input field.<br>
+                    After i have filtered the list i save it to a filtered cars and send that array to carTableRender.</li>
+                <li>I then added a boolean for sorting value and created functions that sort on all the object keys.<br>
+                    After i have sorted the list i send it to the carTableRender, and then i run my toggleArrowDirection</li>
+                <li>I finally added an arrow function with help from ChatGPT to make an arrow on which direction its sorted.<br>
+                    I never really figured out how to remove them when they weren't being sorted.</li>
+                <li>Comments added to the code explaining my functions.</li>
+            </ul>
+        </div>    
+    <script>
+        const cars = [
+            { id: 1, year: 1997, make: 'Ford', model: 'E350', price: 3000 },
+            { id: 2, year: 1999, make: 'Chevy', model: 'Venture', price: 4900 },
+            { id: 3, year: 2000, make: 'Chevy', model: 'Venture', price: 5000 },
+            { id: 4, year: 1996, make: 'Jeep', model: 'Grand Cherokee', price: 4799 },
+            { id: 5, year: 2005, make: 'Volvo', model: 'V70', price: 44799 }
+        ];
+        //This is what renders the cars to the table. It clears out the data with tbody.innerHTML = ""; so it can reset after each sort or filer.
+        //Then it takes all the cars from the array it receives and adds html to it to make it fit into the table rows for each car.
+        function carTableRender(cars){
+            const tbody = document.querySelector('#tbody');
+            tbody.innerHTML = "";
+            cars.forEach(car => {const row = document.createElement('tr');
+                row.innerHTML = `<td>${car.id}</td><td>${car.year}</td><td>${car.make}</td><td>${car.model}</td><td>${car.price}</td>`;
+                tbody.appendChild(row);
+            });
+        };
+        //Initial render of cars when you load.
+        carTableRender(cars);
+        const filter = document.querySelector('#filter-selector');
+        const inputSelecter = document.querySelector('#input-for-select');
+        //A function that accepts filterType and filterValue in then uses a switch case to take the let filteredCars be set.
+        //For year and price it parses the input to an int, for the others it just checks if the strings are the same both check less than.
+        //It t hen loads the filteredCars thru the carTableRender that renders them into the table.
+        function applyFilter(filterType, filterValue) {
+            let filteredCars;
+
+            switch (filterType) {
+                case 'year':
+                    filteredCars = cars.filter(car => car.year < parseInt(filterValue));
+                    break;
+                case 'make':
+                    filteredCars = cars.filter(car => car.make === filterValue);
+                    break;
+                case 'model':
+                    filteredCars = cars.filter(car => car.model === filterValue);
+                    break;
+                case 'price':
+                    filteredCars = cars.filter(car => car.price < parseInt(filterValue));
+                    break;    
+            }
+
+            carTableRender(filteredCars);
+        }
+        //When an option is selected an arrow down function is executed.
+        //It then checks the value against the filter.values if it is there it sets the display option of the inputfield to block.
+        //Then it clears the value of the input field so nothing is there inputSelecter.value = '';.
+        //Then it checks if the option is not filter options if it is it just runs the carTableRender.
+        //If it is not runs the applyFilter with an empty value since it has to be typed into input.
+        filter.addEventListener('change', () => {
+            inputSelecter.style.display = 
+                filter.value === 'year' || 
+                filter.value === 'make' || 
+                filter.value === 'model' || 
+                filter.value === 'price' 
+                ? 'block' : 'none';
+            inputSelecter.value = '';
+            const filterType = filter.value;
+            if (filterType !== 'Filter Options') {
+                applyFilter(filterType, '');
+            } else {
+                carTableRender(cars);
+            }
+        });
+        //This registers on input to the input field. Then executes an arrow function.
+        //The filtertype is already set from the dropdown menu.
+        //It then sets the filter value to what was input in the field and runs the applyfilter function with both type and value present.
+        inputSelecter.addEventListener('input', () => {
+            const filterType = filter.value;
+            const filterValue = inputSelecter.value;
+            applyFilter(filterType, filterValue);
+        });
+        //We set a boolean to know if it is ascending or descending sorting option, we also use an arrow to check direction of it.
+        let sortingOrder = true;
+        const yearHeader = document.querySelector('#year-header');
+        //This adds an event listener to the table headers of the table. It then check if sorting order is true.
+        //If the sortingOrder is true is changes the sorting order from oldest car first.
+        //It then takes each car and runs it thru the Array.sort and checks them against eachother with newest car first.
+        //Otherwise, vice versa. it then runs the carTableRender with the list in the sorted order and renders them into the table.
+        //Then it take the toggleArrowDirection and and runs it on year header since they all have an individual arrow.
+        yearHeader.addEventListener('click', () => {
+            if (sortingOrder) {
+                cars.sort((a, b) => a.year - b.year);
+                sortingOrder = false;
+            } else {
+                cars.sort((a, b) => b.year - a.year);
+                sortingOrder = true;
+            }
+            carTableRender(cars);
+            toggleArrowDirection(yearHeader);
+        });
+        //Got help from ChatGPT sorting strings i couldnt figure out what comparator to use when it wasn't integers it suggested localCompare.
+        const makeHeader = document.querySelector('#make-header');
+        makeHeader.addEventListener('click', () => {
+            if (sortingOrder) {
+                cars.sort((a, b) => a.make.localeCompare(b.make));
+                sortingOrder = false;
+            } else {
+                cars.sort((a, b) => b.make.localeCompare(a.make));
+                sortingOrder = true;
+            }
+            carTableRender(cars);
+            toggleArrowDirection(makeHeader);
+        });
+        const modelHeader = document.querySelector('#model-header');
+        modelHeader.addEventListener('click', () => {
+            if (sortingOrder) {
+                cars.sort((a, b) => a.model.localeCompare(b.model)); 
+                sortingOrder = false;
+            } else {
+                cars.sort((a, b) => b.model.localeCompare(a.model)); 
+                sortingOrder = true;
+            }
+            carTableRender(cars);
+            toggleArrowDirection(modelHeader);
+        });
+        const priceHeader = document.querySelector('#price-header');
+        priceHeader.addEventListener('click', () => {
+            if (sortingOrder) {
+                cars.sort((a, b) => a.price - b.price);
+                sortingOrder = false;
+            } else {
+                cars.sort((a, b) => b.price - a.price);
+                sortingOrder = true;
+            }
+            carTableRender(cars);
+            toggleArrowDirection(priceHeader);
+        });
+        //Had help from ChatGPT for arrow function.
+        //This function takes a parameter header which is one of the header consts we set when sorting.
+        //It then checks the value of sortingOrder, true for ascending, false for descending.
+        //It then either removes or adds the class 'up' to the arrow class to chose either up or down arrow.
+        function toggleArrowDirection(header) {
+            const arrow = header.querySelector('.sort-arrow');
+            if (sortingOrder) {
+                arrow.classList.remove('up');
+            } else {
+                arrow.classList.add('up');
+            }
+        }
+    </script>
+</body>
+</html>

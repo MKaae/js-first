@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <input type="number" id="inputfield" placeholder="Enter user id">
+    <button id="button" class="btn btn-outline-primary">Fetch</button>
+    <button id="button2" class="btn btn-outline-primary">Fetch all</button>
+    <div id="user-info">
+    </div>
+    <table id="user-table" class="table table-hover">
+        <thead>
+            <tr>
+                <th><div id="name-field" style="display: none">Name</div></th>
+                <th><div id="phone-field" style="display: none">Phone</div></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <p>YOUR REPLY MUST INCLUDE (in a div on the page for the solution)<br>
+        A "SHORT" description to the following</p>
+        <li>What is a promise</li>
+        <li>What does the fetch method return</li>
+        <li>Why do we need to have two .then callbacks with our fetch code?</li>
+        <li>What can and should you do in the first?</li>
+        <li>What can and should you do in the last?</li>
+    </p>
+    <div id="explanations">
+        <p>
+            <li>A promise is a function that has 3 states, pending - waiting for answer, resolved if its a succcess<br>
+                &nbsp&nbsp&nbsp&nbsp or rejected if it fails. It basicly waits and then fails or it doesnt.</li>
+            <li>Fetch is a promise that returns the response and uses then to handle the data or errors or parse it to json.<br>
+                </li>
+            <li>First then is used to check for http status response code, the second one parses it to json.</li>
+            <li>The first one we check if status code is wrong.</li>
+            <li>The second one we handle the data we recieve.</li>            
+        </p>
+    </div>
+    <script src="jsFetchEx.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script type="module" src="./index.js"></script>
+</head>
+
+<body>
+  <div style="margin-left: 10%;width: 75%;margin-right: auto">
+    <h2>ES-6 Modules,no Router</h2>
+    <div id="btns" style="margin-bottom: 1em;">
+      <button class="btn btn-dark" id="menu-btn-about">About</button>
+      <button id="menu-btn-all" class="btn btn-dark">All Cars</button>
+      <button id="menu-btn-find" class="btn btn-dark">Find Car</button>
+      <button id="menu-btn-add" class="btn btn-dark">Add Car</button>
+      <button id="menu-btn-edit" class="btn btn-dark">Edit Car</button>
+    </div>
+    <div id="reflections">
+      <li>We use asynchronous functions to avoid callback hell or really nested code(always want to avoid that).</li>
+      <li>It also enables us to use try catch blocks for the async'ed data.</li>
+      <li>It's also alot easier to read, consider aynsc - await you can understand what's going on, instead of nested callbacks.</li>
+      <li>I only really used the full package of error handling in editCar as we got introduced to it a little late.
+        I import it from utils.js and then use it after my fetch to handleHttpErrors, that way i can get the error msg my backend 
+        provides with the json response.
+      </li>
+    </div>
+    <div id="content" />
+</body>
+
+</html>

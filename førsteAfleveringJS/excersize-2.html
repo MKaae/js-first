@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubbling</title>
+    <style>
+        html, body{ width: 100%; height: 100%; overflow: hidden;}
+        body{ display:flex; flex-direction: column; align-items: center;}
+        .my-div {width: 200px; height: 25px;background-color:red; margin:2px; border-radius: 4px;}
+    </style>     
+</head>
+<body>
+    <h1>Excersize 2</h1>
+    <!--The outer div added-->
+    <div id="outer" style="text-align: center; color:white;">
+        <!--Add 2 then 10 more divs-->
+        <div id="div1" class="my-div">Div1</div>
+        <div id="div2" class="my-div">Div2</div>
+        <div id="div3" class="my-div">Div3</div>
+        <div id="div4" class="my-div">Div4</div>
+        <div id="div5" class="my-div">Div5</div>
+        <div id="div6" class="my-div">Div6</div>
+        <div id="div7" class="my-div">Div7</div>
+        <div id="div8" class="my-div">Div8</div>
+        <div id="div9" class="my-div">Div9</div>
+        <div id="div10" class="my-div">Div10</div>
+        <div id="div11" class="my-div">Div11</div>
+        <div id="div12" class="my-div">Div12</div>
+    </div>
+    <p id="text" style="font-size: 30px;"></p>
+    <div style="margin-top: 5px;">
+        <a href="/">back</a>
+    </div>  
+    <h3>Reflections</h3>
+    <div style="border: 1px solid black; border-radius: 5px;padding: 5px;">
+        Replace this with your explanation of the concepts
+        <br>
+        <ul>
+            <li>We can add the outer div and add a single event handler instead of adding one for each.<br>
+                We also use bubbling that when we click a div it reads from the point out.<br>
+                This also improves performance and creates better code if we have to alter it.
+            </li>
+            <li>Comments added to the code explaining my functions.</li>
+        </ul>
+    </div>
+    <script>
+        const outerDiv = document.querySelector('#outer');
+        const pText = document.querySelector('#text');
+//Event listener on the outer div to check when a child is clicked and display the id in <p>
+        outerDiv.addEventListener('click', function(event) {
+            const target = event.target;
+            if (target.classList.contains('my-div')) {
+                pText.innerText = "Hi from " +target.id;
+            }
+        });
+    </script>
+</body>
+</html>

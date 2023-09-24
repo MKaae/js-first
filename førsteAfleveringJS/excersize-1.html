@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excersize 1</title>
+    <!-- Added bootstrap so i could implement some buttons that arent ugly-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        /* Changed a bit of sizes and made it flex to make it prettier */
+        html, body{ width: 100%; height: 100%; overflow: hidden;}
+        body{ display:flex; flex-direction: column; align-items: center;}
+    </style>
+</head>
+<body>
+    <!--changed a bit on the sizes to make it prettier when looking at it-->
+    <h1>Excersize 1</h1>
+    <div id="d1" style="width: 500px; margin-top: 30px; height: 90px">&nbsp;</div>
+    <div id="d2" style="width: 500px; height: 90px">&nbsp;</div>
+    <div id="d3" style="width: 500px; height: 90px">&nbsp;</div>
+    <button id="btn1" style="margin: 10px;" class="btn btn-outline-primary">What happened to Hungary in 1944</button>
+    <button id="btn2" class="btn btn-outline-primary">What happened to Hungary in 1945</button>
+    <div style="margin-top: 5px;">
+        <a href="/">back</a>
+    </div>  
+    <h3>Reflections</h3>
+    <div style="border: 1px solid black; border-radius: 5px;padding: 5px;">
+        Replace this with your explanation of the concepts
+        <br>
+        <ul>
+            <li>window.onload loads the function called to it on page load<br>
+                initialColors and setNewColors has 2 seperate buttons and they select the divs<br>
+                and then run it thru an arrow and sets the backgroundColor elemnt to an assigned color i chose.
+            </li>
+                <li>Comments added to the code explaining my functions.</li>
+        </ul>
+        Feel free to write in danish
+    </div>
+    <script>
+        //Function for intial colors i use on load and button2.
+        //Had a little fun with it and made a button to revert it so you don't have to reload page.
+        function intialColors(){
+            const colors = ["#ff0000", "#ffffff", "#008000"];
+            const divs = document.querySelectorAll("div");
+            
+            for(let i = 0; i < divs.length; i++){
+                divs[i].style.backgroundColor = colors[i];
+            }
+        }
+        //Function for newcolor i use in button1.
+        function setNewColors(){
+            const colors = ["#000000", "#ff0000", "#e5ff00"];
+            const divs = document.querySelectorAll("div");
+
+            for(let i = 0; i < divs.length; i++){
+                divs[i].style.backgroundColor = colors[i];
+            }
+        }
+        //This happens on load.
+        window.onload = intialColors;
+        //button1 with #btn1 to find my button1 in my DOM and adding eventlistener with click and function.
+        const button1 = document.querySelector("#btn1");
+        button1.addEventListener("click", setNewColors)
+        //Same as button1 but with button2.
+        const button2 = document.querySelector("#btn2");
+        button2.addEventListener("click", intialColors);
+    </script>
+</body>
+</html>

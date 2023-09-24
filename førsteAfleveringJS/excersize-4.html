@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select with options</title>
+    <style>
+        html, body{ width: 100%; height: 100%; overflow: hidden;}
+        body{ display:flex; flex-direction: column; align-items: center;}
+    </style>
+</head>
+<body>
+    <h1>Excersize 4</h1>
+    <h2>Select your brand</h2>
+    <!--Dropdown menu-->
+    <select id="car-selector" style="font-size: 20px;">
+    <!-- Options will be populated by JavaScript (Lars own comment from copy/paste)-->
+    </select>
+    <h2>Selected Brand</h2>
+    <h3 id="car-make"></h3>
+    <div style="margin-top: 5px; margin: 0 auto; width: fit-content;">
+        <a href="/">back</a>
+    </div>  
+    <div style="margin: 0 auto; width:fit-content">
+    <h2>Reflections</h2>
+    </div>
+        <div style="border: 1px solid black; border-radius: 5px;padding: 5px; width:80%; margin:0 auto;">
+            Replace this with your explanation of the concepts
+            <br>
+            <ul>
+                <li>We use the appendChild to add makes to the list as we iterate thru them with forEach</li>
+                <li>Then we use eventListener with change so whenever we select it we chose it<br>
+                    and send it to the header 3.</li>
+                <li>Comments added to the code explaining my functions.</li>
+            </ul>
+        </div>
+    <script>
+        const cars = ["Ford", "WW", "Toyota", "Volvo"]; // Assume this was fetched from the backend (Lars own comment from copy/paste)
+        const carSelector = document.querySelector('#car-selector');
+        const carMake = document.querySelector('#car-make');
+        //For each thru cars to make an option element with each car in the array, and append it to the select so it gets into the menu.
+        cars.forEach(make => {
+            const option = document.createElement('option');
+            option.value = make;
+            option.textContent = make;
+            carSelector.appendChild(option);
+        });
+        //When you change the element in the select menu it will put the contents into the <h3> header.
+        carSelector.addEventListener('change', function() {
+            carMake.textContent = carSelector.value;
+        }); 
+    </script>
+</body>
+</html>
